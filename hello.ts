@@ -1,10 +1,19 @@
 import request, {Response} from 'request';
 
-request("https://github.com/", {
-  headers: {
-    // https://github.com/request/request/issues/2047#issuecomment-272473278
-    Connection: "keep-alive"
+const url = 'https://og-dev-12345.local/marketplace/';
+
+// Works but have a warning
+// (process as any).env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+
+request(url, {
+  agentOptions: {
+    // works
+    rejectUnauthorized: false
   }
 }, (error: any, response: Response, body: any) => {
-  console.log(body);
+  if (error) {
+    console.error(error);
+    return;
+  }
+  console.log(body.length);
 })
